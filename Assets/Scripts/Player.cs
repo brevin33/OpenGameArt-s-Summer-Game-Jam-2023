@@ -4,12 +4,14 @@ using UnityEngine;
 using static UnityEditor.IMGUI.Controls.CapsuleBoundsHandle;
 using UnityEngine.UI;
 using static UnityEngine.UI.Image;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using Unity.Mathematics;
 
 public class Player : MonoBehaviour
 {
 
     [SerializeField]
-    Camera camera;
+    private Camera camera;
 
     [SerializeField, Range(0f, 100f)]
     float maxSpeed = 10f;
@@ -21,13 +23,20 @@ public class Player : MonoBehaviour
     float bounciness = 0.5f;
 
     [SerializeField]
-    Rect allowedArea = new Rect(-5f, -5f, 10f, 10f);
+    Rect allowedArea = new Rect(-2.5f, -2.93f, 5f, 5.9f);
+
+    [SerializeField]
+    int HP;
+
+    [SerializeField]
+    LayerMask mousePosHits;
 
     Vector3 velocity;
 
-    Vector3 mousePos;
+    public Vector3 mousePos;
 
-    Weapon[] weapons;
+    [SerializeField]
+    GameObject[] weapons;
 
     bool attacking;
 
@@ -39,7 +48,7 @@ public class Player : MonoBehaviour
 
     bool tryAttacking;
 
-    int combo = 1;
+    public static int combo = 1;
 
     public void hitCombo()
     {
@@ -49,6 +58,11 @@ public class Player : MonoBehaviour
     public void dropCombo()
     {
         combo = 1;
+    }
+
+    public void takeDamage(int amount)
+    {
+        HP -= amount;
     }
 
     void Update()
@@ -77,7 +91,6 @@ public class Player : MonoBehaviour
 
     void getInput()
     {
-        transform.position = Vector3.zero;
         playerInput.x = Input.GetAxis("Horizontal");
         playerInput.y = Input.GetAxis("Vertical");
         playerInput = Vector2.ClampMagnitude(playerInput, 1f);
@@ -86,11 +99,14 @@ public class Player : MonoBehaviour
         {
             tryAttacking = true;
         }
-
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit raycastHit))
+        else
         {
-            mousePos = raycastHit.point;
+            tryAttacking= false;
+        }
+        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, mousePosHits))
+        {
+            mousePos = new Vector3( raycastHit.point.x, 0.5f, raycastHit.point.z);
         }
     }
 
@@ -98,7 +114,7 @@ public class Player : MonoBehaviour
     void faceMouse()
     {
         Vector3 facingDir = mousePos - transform.localPosition;
-        // -----------------------------------------------------------    Not Implimented ---------------------------------
+        // -----------------------------------------------------------    Not Implimented --------------------------------
     }
 
     void WASDMovment()
@@ -138,14 +154,26 @@ public class Player : MonoBehaviour
         transform.localPosition = newPosition;
     }
 
+    public void createHitbox(float distFromPlayer, GameObject prefab)
+    {
+        Vector3 facingDir = mousePos - transform.position;
+        facingDir.Normalize();
+        Vector3 spawnPos = transform.position + facingDir * distFromPlayer;
+        quaternion rotation = transform.rotation;
+        rotation *= Quaternion.LookRotation(facingDir);
+        rotation *= Quaternion.Euler(90, 270, 0);
+        GameObject hitBox = Instantiate(prefab, spawnPos, rotation);
+    }
+
     IEnumerator doAttacks()
     {
         combo = 1;
         for (int i = 0; i < weapons.Length; i++)
         {
-            Weapon weapon = weapons[i];
-            weapon.attack(mousePos, transform);
-            yield return new WaitForSeconds(weapon.getCooldown());
+            GameObject weapon = weapons[i];
+            Stats stats = weapon.GetComponent<Stats>();
+            createHitbox(stats.distFromPlayer, weapon);
+            yield return new WaitForSeconds(stats.cooldown);
         }
         attacking = false;
     }
