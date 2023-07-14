@@ -129,4 +129,4 @@ MonoBehaviour:
   damage: 3
   comboMultiplyer: 1.1
   knockBackDist: 500
-  HitboxDuration: 0.4
+  HitboxDuration: 0.3
