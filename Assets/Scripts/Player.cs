@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
 
         attack();
 
-        faceMouse();
+        faceMovement();
     }
 
     void attack()
@@ -110,11 +110,8 @@ public class Player : MonoBehaviour
         }
     }
 
-
-    void faceMouse()
+    void faceMovement()
     {
-        Vector3 facingDir = mousePos - transform.localPosition;
-        // -----------------------------------------------------------    Not Implimented --------------------------------
     }
 
     void WASDMovment()
@@ -159,8 +156,7 @@ public class Player : MonoBehaviour
         Vector3 facingDir = mousePos - transform.position;
         facingDir.Normalize();
         Vector3 spawnPos = transform.position + facingDir * distFromPlayer;
-        quaternion rotation = transform.rotation;
-        rotation *= Quaternion.LookRotation(facingDir);
+        quaternion rotation = Quaternion.LookRotation(facingDir);
         rotation *= Quaternion.Euler(90, 270, 0);
         GameObject hitBox = Instantiate(prefab, spawnPos, rotation);
     }

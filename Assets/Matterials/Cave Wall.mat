@@ -121,7 +121,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     - _ambient: 0.8
-    - _metallic: 1
+    - _metallic: 10.51
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
