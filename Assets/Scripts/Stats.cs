@@ -8,4 +8,9 @@ public class Stats : MonoBehaviour
     public float cooldown;
     [SerializeField]
     public float distFromPlayer;
+
+    public virtual float getDistFromPlayer()
+    {
+        return distFromPlayer;
+    }
 }

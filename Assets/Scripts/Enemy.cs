@@ -31,6 +31,8 @@ public class Enemy : MonoBehaviour
 
     Vector3 velocity;
 
+    bool facingLeft = true;
+
     public virtual void Hit(Vector3 knockBack, float damage)
     {
         HP -= damage;
@@ -80,6 +82,21 @@ public class Enemy : MonoBehaviour
             velocity.z = -velocity.z * bounciness;
         }
         transform.localPosition = newPosition;
+        flipCharacter();
+    }
+
+    private void flipCharacter()
+    {
+        if (facingLeft && velocity.x > 0)
+        {
+            facingLeft = false;
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        }
+        else if (!facingLeft && velocity.x < 0)
+        {
+            facingLeft = true;
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

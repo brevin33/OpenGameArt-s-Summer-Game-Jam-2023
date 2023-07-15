@@ -33,7 +33,9 @@ public class Player : MonoBehaviour
 
     Vector3 velocity;
 
-    public Vector3 mousePos;
+    public static Vector3 mousePos;
+
+    public static Vector3 playerPos;
 
     [SerializeField]
     GameObject[] weapons;
@@ -47,6 +49,8 @@ public class Player : MonoBehaviour
     Vector2 playerInput;
 
     bool tryAttacking;
+
+    bool facingLeft;
 
     public static int combo = 1;
 
@@ -73,7 +77,9 @@ public class Player : MonoBehaviour
 
         attack();
 
-        faceMovement();
+        flipCharacter();
+
+        playerPos = transform.position;
     }
 
     void attack()
@@ -110,8 +116,18 @@ public class Player : MonoBehaviour
         }
     }
 
-    void faceMovement()
+    private void flipCharacter()
     {
+        if (facingLeft && playerInput.x < 0)
+        {
+            facingLeft = false;
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        }
+        else if (!facingLeft && playerInput.x > 0)
+        {
+            facingLeft = true;
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        }
     }
 
     void WASDMovment()
@@ -154,6 +170,7 @@ public class Player : MonoBehaviour
     public void createHitbox(float distFromPlayer, GameObject prefab)
     {
         Vector3 facingDir = mousePos - transform.position;
+        facingDir.y = 0;
         facingDir.Normalize();
         Vector3 spawnPos = transform.position + facingDir * distFromPlayer;
         quaternion rotation = Quaternion.LookRotation(facingDir);
@@ -168,7 +185,7 @@ public class Player : MonoBehaviour
         {
             GameObject weapon = weapons[i];
             Stats stats = weapon.GetComponent<Stats>();
-            createHitbox(stats.distFromPlayer, weapon);
+            createHitbox(stats.getDistFromPlayer(), weapon);
             yield return new WaitForSeconds(stats.cooldown);
         }
         attacking = false;

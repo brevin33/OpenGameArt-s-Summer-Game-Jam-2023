@@ -459,7 +459,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 20
   field of view: 50
   orthographic: 0
   orthographic size: 5
@@ -617,7 +617,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 432424142}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.41625, y: 0.13499998, z: -0.0012500001}
+  m_LocalPosition: {x: -0.41625, y: 0.13499998, z: -0.007}
   m_LocalScale: {x: 0.875, y: 0.875, z: 0.875}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -724,9 +724,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 6
-  maxSpeed: 10
-  maxAcceleration: 3
-  bounciness: 0.5
+  maxSpeed: 100
+  maxAcceleration: 4.2
+  bounciness: 0.2
   damage: 0
   playerPos: {fileID: 613292215}
   player: {fileID: 613292211}
@@ -862,6 +862,7 @@ GameObject:
   - component: {fileID: 613292216}
   - component: {fileID: 613292217}
   - component: {fileID: 613292218}
+  - component: {fileID: 613292219}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -996,6 +997,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!95 &613292219
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613292210}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a06438ca2a89b3a4798fffe6875ddcda, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &806306789
 PrefabInstance:
   m_ObjectHideFlags: 0
