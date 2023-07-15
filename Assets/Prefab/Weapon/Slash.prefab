@@ -98,8 +98,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3.3
-  m_Center: {x: -1.4, y: 0, z: 0}
+  m_Radius: 3.8264675
+  m_Center: {x: -1.9264678, y: 0, z: 0}
 --- !u!114 &3276603002990382504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,8 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b948202ea3ff24d4eaf252360c6fa7b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 0.5
-  distFromPlayer: 1.1
+  cooldown: 0.7
+  distFromPlayer: 1.6
 --- !u!114 &2615461844688522540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,5 +128,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 3
   comboMultiplyer: 1.1
-  knockBackDist: 500
+  knockBackDist: 3
   HitboxDuration: 0.3

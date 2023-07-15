@@ -27,13 +27,18 @@ public class Enemy : MonoBehaviour
     private Player player;
 
     [SerializeField]
-    Rect allowedArea = new Rect(-2.5f, -2.93f, 5f, 5.9f);
+    Rect allowedArea = new Rect(-5.47f, -2.93f, 10.94f, 5.9f);
 
     Vector3 velocity;
 
     public virtual void Hit(Vector3 knockBack, float damage)
     {
         HP -= damage;
+        if(HP <= 0)
+        {
+            Game.EnemyDied();
+            Destroy(gameObject);
+        }
         velocity = knockBack;
     }
 

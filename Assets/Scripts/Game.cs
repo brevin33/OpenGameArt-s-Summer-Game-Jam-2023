@@ -9,12 +9,13 @@ public class Game : MonoBehaviour
     GameObject player;
 
     [SerializeField]
-    Rect allowedArea = new Rect(-2.5f, -2.93f, 5f, 5.9f);
+    Rect allowedArea = new Rect(-5.47f, -2.93f, 10.94f, 5.9f);
 
-    public ref GameObject getPlayer()
+    static int aliveEnemies;
+
+    public static void EnemyDied()
     {
-        return ref player;
+        aliveEnemies--;
     }
-
 
 }
