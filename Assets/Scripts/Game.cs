@@ -18,4 +18,9 @@ public class Game : MonoBehaviour
         aliveEnemies--;
     }
 
+    public static void goNextLevel()
+    {
+
+    }
+
 }
