@@ -25,7 +25,7 @@ public class AutoDepthOfFeild : MonoBehaviour
     {
         Vector2 p = new Vector2( Player.transform.position.z, Player.transform.position.y);
         Vector2 c = new Vector2(transform.position.z, transform.position.y);
-        float focalDistance = Vector2.Distance(p, c) * 0.8f;
-        depthOfField.focusDistance.value = focalDistance;
+        float focalDistance = Vector2.Distance(p, c) * 1.05f;
+        depthOfField.gaussianStart.value = focalDistance;
     }
 }

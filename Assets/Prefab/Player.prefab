@@ -65,7 +65,7 @@ MonoBehaviour:
   mousePosHits:
     serializedVersion: 2
     m_Bits: 64
-  hitInvulneriblilityTime: 1
+  hitInvulneriblilityTime: 2.4
   renders:
   - {fileID: 8711769613355070505}
   - {fileID: 8711769612739045470}
