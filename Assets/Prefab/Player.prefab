@@ -59,11 +59,16 @@ MonoBehaviour:
     x: -5.46
     y: -2.93
     width: 10.92
-    height: 5.9
-  HP: 0
+    height: 5.7
+  HP: 4
+  Hearts: []
   mousePosHits:
     serializedVersion: 2
     m_Bits: 64
+  hitInvulneriblilityTime: 1
+  renders:
+  - {fileID: 8711769613355070505}
+  - {fileID: 8711769612739045470}
   weapons:
   - {fileID: 8864222477901719341, guid: c18ebf8274d3f1c40b0038bb51a07d0e, type: 3}
 --- !u!212 &8711769612739045470

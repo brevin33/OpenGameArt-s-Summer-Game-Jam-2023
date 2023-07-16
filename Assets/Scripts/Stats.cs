@@ -9,6 +9,7 @@ public class Stats : MonoBehaviour
     [SerializeField]
     public float distFromPlayer;
 
+
     public virtual float getDistFromPlayer()
     {
         return distFromPlayer;

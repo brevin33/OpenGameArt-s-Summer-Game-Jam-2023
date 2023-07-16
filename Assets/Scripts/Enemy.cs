@@ -29,6 +29,10 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     Rect allowedArea = new Rect(-5.47f, -2.93f, 10.94f, 5.9f);
 
+    [SerializeField]
+    float knockBackStrength;
+
+
     Vector3 velocity;
 
     bool facingLeft = true;
@@ -103,12 +107,10 @@ public class Enemy : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            dealDamage();
+            Vector3 knockBack = other.transform.position - transform.position;
+            knockBack.y = 0;
+            knockBack = knockBack.normalized * knockBackStrength;
+            player.takeDamage(damage, knockBack);
         }
-    }
-
-    public virtual void dealDamage()
-    {
-        player.takeDamage(damage);
     }
 }

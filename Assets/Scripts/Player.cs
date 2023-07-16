@@ -29,7 +29,16 @@ public class Player : MonoBehaviour
     int HP;
 
     [SerializeField]
+    GameObject[] Hearts;
+
+    [SerializeField]
     LayerMask mousePosHits;
+
+    [SerializeField]
+    float hitInvulneriblilityTime;
+
+    [SerializeField]
+    SpriteRenderer[] renders;
 
     Vector3 velocity;
 
@@ -54,6 +63,8 @@ public class Player : MonoBehaviour
 
     public static int combo = 1;
 
+    bool hitInvulneriblility;
+
     public void hitCombo()
     {
         combo += 1;
@@ -64,9 +75,49 @@ public class Player : MonoBehaviour
         combo = 1;
     }
 
-    public void takeDamage(int amount)
+    public void takeDamage(int amount, Vector3 knockBack)
     {
+        if (hitInvulneriblility)
+        {
+            return;
+        }
+        for (int i = Mathf.Max(HP-amount, 0); i < HP; i++)
+        {
+            Hearts[i].SetActive(false);
+        }
         HP -= amount;
+        if (HP <= 0)
+        {
+            Game.gameOver();
+        }
+        velocity = knockBack;
+        hitInvulneriblility = true;
+        StartCoroutine(Invulnerablility());
+    }
+
+    public void gainHP( int amount)
+    {
+        if (HP+amount > 9)
+        {
+            for (int i = HP; i < 9; i++)
+            {
+                Hearts[i].SetActive(true);
+            }
+            HP = 9;
+            return;
+        }
+        for (int i = HP; i < amount + HP; i++)
+        {
+            Hearts[i].SetActive(true);
+        }
+        HP += amount;
+    }
+
+    private void Awake()
+    {
+        for (int i = 0; i < HP; i++) {
+            Hearts[i].SetActive(true);
+        }
     }
 
     void Update()
@@ -189,6 +240,25 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(stats.cooldown);
         }
         attacking = false;
+    }
+
+    IEnumerator Invulnerablility()
+    {
+        bool turnOn = false;
+        for (int j = 0; j < 6; j++)
+        {
+            for (int i = 0; i < renders.Length; i++)
+            {
+                renders[i].enabled = turnOn;
+            }
+            yield return new WaitForSeconds(hitInvulneriblilityTime/6);
+            turnOn = !turnOn;
+        }
+        for (int i = 0; i < renders.Length; i++)
+        {
+            renders[i].enabled = true;
+        }
+        hitInvulneriblility = false;
     }
 
 }

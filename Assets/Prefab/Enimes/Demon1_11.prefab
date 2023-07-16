@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6458699548563040899}
   - component: {fileID: 6458699548563040956}
   - component: {fileID: 6458699548563040959}
+  - component: {fileID: 8362569223402828182}
   m_Layer: 0
   m_Name: Demon1_11
   m_TagString: Enemy
@@ -100,10 +101,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 6
-  maxSpeed: 100
-  maxAcceleration: 6
+  maxSpeed: 17
+  maxAcceleration: 8
   bounciness: 0.275
-  damage: 0
+  damage: 1
   playerPos: {fileID: 0}
   player: {fileID: 0}
   allowedArea:
@@ -112,6 +113,7 @@ MonoBehaviour:
     y: -2.93
     width: 10.94
     height: 5.9
+  knockBackStrength: 40
 --- !u!54 &6458699548563040956
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -141,3 +143,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8169148, y: 1, z: 0.2}
   m_Center: {x: -0.03687966, y: 0, z: 0}
+--- !u!95 &8362569223402828182
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6458699548563040896}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8b03e4c88ac47ff4e8b57cb94f064475, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
