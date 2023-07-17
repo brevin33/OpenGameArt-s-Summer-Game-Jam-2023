@@ -39,6 +39,13 @@ public class Game : MonoBehaviour
 
     int aliveEnemies;
 
+    Player playerScript;
+
+    private void Awake()
+    {
+        playerScript = player.GetComponent<Player>();
+    }
+
 
     public void EnemyDied()
     {
@@ -56,6 +63,7 @@ public class Game : MonoBehaviour
     {
         place++;
         player.transform.position = newRoomPlayerSpawnPos.position;
+        playerScript.velocity = Vector3.zero;
         spawnEnemies(4);
     }
 
@@ -69,6 +77,14 @@ public class Game : MonoBehaviour
         spawnEnemies(4);
     }
 
+
+    public void closeDoors()
+    {
+        for (int i = 0; i < doors.Length; i++)
+        {
+            doors[i].closeDoor();
+        }
+    }
 
     void spawnEnemies(int amount)
     {

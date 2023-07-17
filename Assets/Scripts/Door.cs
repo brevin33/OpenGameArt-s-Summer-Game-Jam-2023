@@ -35,13 +35,12 @@ public class Door : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("here");
         if (other.tag == "Player")
         {
             if (isOpen)
             {
                 game.goNextLevel();
-                closeDoor();
+                game.closeDoors();
             }
         }
     }

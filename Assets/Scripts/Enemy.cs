@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -32,12 +33,25 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     float knockBackStrength;
 
+    [SerializeField]
+    Image healthBar; 
+
     Game game;
 
+    float maxHP;
 
     Vector3 velocity;
 
     bool facingLeft = true;
+
+    float healthBarAlpha = 0;
+
+    float startWait = 0.55f;
+
+    private void Start()
+    {
+        maxHP = HP;
+    }
 
     public void setup(GameObject p, Game g)
     {
@@ -49,7 +63,9 @@ public class Enemy : MonoBehaviour
     public virtual void Hit(Vector3 knockBack, float damage)
     {
         HP -= damage;
-        if(HP <= 0)
+        healthBar.fillAmount = HP/maxHP;
+        healthBarAlpha = 1;
+        if (HP <= 0)
         {
             game.EnemyDied();
             Destroy(gameObject);
@@ -59,12 +75,21 @@ public class Enemy : MonoBehaviour
 
     public virtual Vector3 path()
     {
-        return ((playerPos.position - transform.position).normalized + new Vector3(Random.Range(0f,0.2f), Random.Range(0f, 0.2f), Random.Range(0f, 0.2f))).normalized;
+        float randomMovePotential = 0.7f;
+        return ((playerPos.position - transform.position).normalized + new Vector3(Random.Range(-randomMovePotential, randomMovePotential), Random.Range(-randomMovePotential, randomMovePotential), Random.Range(-randomMovePotential, randomMovePotential))).normalized;
     }
 
     private void Update()
     {
+        startWait -= Time.deltaTime;
+        healthBar.color = new Color(1, 0, 0, healthBarAlpha);
+        if (startWait > 0)
+        {
+            return;
+        }
         Vector3 desiredVelocity = path() * maxSpeed;
+
+        healthBarAlpha = Mathf.Max(0, healthBarAlpha - 0.8f * Time.deltaTime);
 
         float maxSpeedChange = maxAcceleration * Time.deltaTime;
         velocity.x =

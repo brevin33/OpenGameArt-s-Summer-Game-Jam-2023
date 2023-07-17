@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     Game game;
 
-    Vector3 velocity;
+    public Vector3 velocity;
 
     public static Vector3 mousePos;
 
