@@ -175,12 +175,12 @@ public class Player : MonoBehaviour
         if (facingLeft && playerInput.x < 0)
         {
             facingLeft = false;
-            transform.rotation *= Quaternion.Euler(0, 180, 0);
+            transform.localScale = Vector3.Scale(transform.localScale, new Vector3(-1, 1, 1));
         }
         else if (!facingLeft && playerInput.x > 0)
         {
             facingLeft = true;
-            transform.rotation *= Quaternion.Euler(0, 180, 0);
+            transform.localScale = Vector3.Scale(transform.localScale, new Vector3(-1, 1, 1));
         }
     }
 

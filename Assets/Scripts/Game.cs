@@ -74,7 +74,6 @@ public class Game : MonoBehaviour
 
     private void Start()
     {
-        spawnEnemies(4);
     }
 
 

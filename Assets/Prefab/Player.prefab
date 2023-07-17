@@ -69,6 +69,8 @@ MonoBehaviour:
   renders:
   - {fileID: 8711769613355070505}
   - {fileID: 8711769612739045470}
+  game: {fileID: 0}
+  velocity: {x: 0, y: 0, z: 0}
   weapons:
   - {fileID: 8864222477901719341, guid: c18ebf8274d3f1c40b0038bb51a07d0e, type: 3}
 --- !u!212 &8711769612739045470
@@ -198,7 +200,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8711769613228820009}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.652, y: 0.751, z: -0.228}
+  m_LocalPosition: {x: -0.352, y: 0.867, z: -0.131}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class Enemy : MonoBehaviour
 {
@@ -22,10 +24,10 @@ public class Enemy : MonoBehaviour
     int damage;
 
     [SerializeField]
-    private Transform playerPos;
+    public Transform playerPos;
 
     [SerializeField]
-    private Player player;
+    public Player player;
 
     [SerializeField]
     Rect allowedArea = new Rect(-5.47f, -2.93f, 10.94f, 5.9f);
@@ -34,7 +36,7 @@ public class Enemy : MonoBehaviour
     float knockBackStrength;
 
     [SerializeField]
-    Image healthBar; 
+    Image healthBar;
 
     Game game;
 
@@ -60,6 +62,9 @@ public class Enemy : MonoBehaviour
         game = g;
     }
 
+
+    public virtual void specialAblility (){
+    }
     public virtual void Hit(Vector3 knockBack, float damage)
     {
         HP -= damage;
@@ -121,6 +126,7 @@ public class Enemy : MonoBehaviour
         }
         transform.localPosition = newPosition;
         flipCharacter();
+        specialAblility();
     }
 
     private void flipCharacter()
@@ -128,12 +134,12 @@ public class Enemy : MonoBehaviour
         if (facingLeft && velocity.x > 0)
         {
             facingLeft = false;
-            transform.rotation *= Quaternion.Euler(0, 180, 0);
+            transform.localScale = Vector3.Scale(transform.localScale, new Vector3(-1,1,1));
         }
         else if (!facingLeft && velocity.x < 0)
         {
             facingLeft = true;
-            transform.rotation *= Quaternion.Euler(0, 180, 0);
+            transform.localScale = Vector3.Scale(transform.localScale, new Vector3(-1, 1, 1));
         }
     }
 
