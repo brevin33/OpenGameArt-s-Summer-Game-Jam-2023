@@ -32,17 +32,26 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     float knockBackStrength;
 
+    Game game;
+
 
     Vector3 velocity;
 
     bool facingLeft = true;
+
+    public void setup(GameObject p, Game g)
+    {
+        player = p.GetComponent<Player>();
+        playerPos = p.transform;
+        game = g;
+    }
 
     public virtual void Hit(Vector3 knockBack, float damage)
     {
         HP -= damage;
         if(HP <= 0)
         {
-            Game.EnemyDied();
+            game.EnemyDied();
             Destroy(gameObject);
         }
         velocity = knockBack;
@@ -50,7 +59,7 @@ public class Enemy : MonoBehaviour
 
     public virtual Vector3 path()
     {
-        return (playerPos.position - transform.position).normalized;
+        return ((playerPos.position - transform.position).normalized + new Vector3(Random.Range(0f,0.2f), Random.Range(0f, 0.2f), Random.Range(0f, 0.2f))).normalized;
     }
 
     private void Update()

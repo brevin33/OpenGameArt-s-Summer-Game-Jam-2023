@@ -9,7 +9,10 @@ public class Door : MonoBehaviour
     [SerializeField]
     Sprite close;
 
-    bool isOpen = false;
+    [SerializeField]
+    Game game;
+
+    public bool isOpen = false;
 
     SpriteRenderer renderer;
 
@@ -32,11 +35,13 @@ public class Door : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("here");
         if (other.tag == "Player")
         {
-            if (!isOpen)
+            if (isOpen)
             {
-                Game.goNextLevel();
+                game.goNextLevel();
+                closeDoor();
             }
         }
     }

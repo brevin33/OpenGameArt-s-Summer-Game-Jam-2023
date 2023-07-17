@@ -40,6 +40,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     SpriteRenderer[] renders;
 
+    [SerializeField]
+    Game game;
+
     Vector3 velocity;
 
     public static Vector3 mousePos;
@@ -88,7 +91,7 @@ public class Player : MonoBehaviour
         HP -= amount;
         if (HP <= 0)
         {
-            Game.gameOver();
+            game.gameOver();
         }
         velocity = knockBack;
         hitInvulneriblility = true;

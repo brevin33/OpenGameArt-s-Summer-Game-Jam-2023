@@ -1,7 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using UnityEditor.SceneManagement;
+using UnityEditor.UI;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
 public class Game : MonoBehaviour
@@ -14,40 +18,73 @@ public class Game : MonoBehaviour
     Rect allowedArea = new Rect(-5.47f, -2.93f, 10.94f, 5.9f);
 
     [SerializeField]
-    GameObject[][] Enimes;
+    GameObject[] enimes;
 
-    public int place;
+    [SerializeField]
+    GameObject[] walls;
 
-    static int aliveEnemies;
+    [SerializeField]
+    GameObject[] floors;
 
-    public static void EnemyDied()
+    [SerializeField]
+    Door[] doors;
+
+    List<List<int>> stageEnimes = new List<List<int>> { new List<int> { 0 }, new List<int> { 0 } };
+
+    [SerializeField]
+    Transform newRoomPlayerSpawnPos;
+
+
+    public int place = 0;
+
+    int aliveEnemies;
+
+
+    public void EnemyDied()
     {
         aliveEnemies--;
-    }
-
-    public static void goNextLevel()
-    {
-
-    }
-
-    public static void gameOver()
-    {
-
-    }
-
-
-
-    void spawnEnemies()
-    {
-        Vector3 spawnPos = Vector3.one * 99;
-        while (Vector2.Distance(player.transform.position, spawnPos) < 0.8)
+        if (aliveEnemies <= 0)
         {
-            float xPos = Random.Range(-5.4f, 5.4f);
-            float zPos = Random.Range(-2.8f, 2.8f);
-            spawnPos = new Vector3(xPos, 0.5f, zPos);
-        };
+            for (int i = 0;i < doors.Length; i++)
+            {
+                doors[i].openDoor();
+            }
+        }
+    }
 
-        Instantiate(Enimes[place][Random.Range(0,Enimes.Length-1)], spawnPos, Quaternion.identity);
+    public void goNextLevel()
+    {
+        place++;
+        player.transform.position = newRoomPlayerSpawnPos.position;
+        spawnEnemies(4);
+    }
 
+    public void gameOver()
+    {
+
+    }
+
+    private void Start()
+    {
+        spawnEnemies(4);
+    }
+
+
+    void spawnEnemies(int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            Vector3 spawnPos = player.transform.position;
+            while (Vector2.Distance(player.transform.position, spawnPos) < 1.2f)
+            {
+                float xPos = Random.Range(-5.4f, 5.4f);
+                float zPos = Random.Range(-2.8f, 2.8f);
+                spawnPos = new Vector3(xPos, 0.4f, zPos);
+            };
+            int r = Random.Range(0, stageEnimes[place].Count);
+            GameObject e = Instantiate(enimes[stageEnimes[place][r]], spawnPos, Quaternion.identity);
+            e.GetComponent<Enemy>().setup(player, this);
+        }
+        aliveEnemies = amount;
     }
 }

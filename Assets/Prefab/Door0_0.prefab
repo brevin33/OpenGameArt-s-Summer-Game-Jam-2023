@@ -98,8 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e7096291427a3f4bbf55ba679011722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  open: {fileID: -1177755344, guid: 77b160b76259ca04c9598037305621a3, type: 3}
-  close: {fileID: 679855341, guid: 77b160b76259ca04c9598037305621a3, type: 3}
+  open: {fileID: 679855341, guid: 77b160b76259ca04c9598037305621a3, type: 3}
+  close: {fileID: -1177755344, guid: 77b160b76259ca04c9598037305621a3, type: 3}
+  isOpen: 0
 --- !u!65 &8853739292682346666
 BoxCollider:
   m_ObjectHideFlags: 0
