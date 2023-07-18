@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Slash : MonoBehaviour
+public class Slash : Weapon
 {
 
     [SerializeField]
@@ -18,16 +18,13 @@ public class Slash : MonoBehaviour
     [SerializeField]
     float HitboxDuration = 0.2f;
 
+    Player p;
 
     bool hit = false;
 
-    private void Awake()
+    private void Start()
     {
-        OnEnable();
-    }
-    private void OnEnable()
-    {
-        
+        p = player.GetComponent<Player>();
     }
 
     private void Update()
@@ -35,7 +32,14 @@ public class Slash : MonoBehaviour
         HitboxDuration -= Time.deltaTime;
         if (HitboxDuration <= 0)
         {
-            Player.combo = hit ? Player.combo : 1;
+            if (hit)
+            {
+                p.hitCombo();
+            }
+            else
+            {
+                p.dropCombo();
+            }
             Destroy(gameObject);
         }
     }
@@ -49,7 +53,6 @@ public class Slash : MonoBehaviour
             knockBack.y = 0;
             knockBack = knockBack.normalized * knockBackDist;
             other.GetComponent<Enemy>().Hit(knockBack, damage * Mathf.Pow(comboMultiplyer, Player.combo));
-            Player.combo += 1;
         }
     }
 }

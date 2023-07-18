@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
 
     float maxHP;
 
-    Vector3 velocity;
+    public Vector3 velocity;
 
     bool facingLeft = true;
 
@@ -81,7 +81,9 @@ public class Enemy : MonoBehaviour
     public virtual Vector3 path()
     {
         float randomMovePotential = 0.7f;
-        return ((playerPos.position - transform.position).normalized + new Vector3(Random.Range(-randomMovePotential, randomMovePotential), Random.Range(-randomMovePotential, randomMovePotential), Random.Range(-randomMovePotential, randomMovePotential))).normalized;
+        Vector3 movedir = ((playerPos.position - transform.position).normalized + new Vector3(Random.Range(-randomMovePotential, randomMovePotential),0, Random.Range(-randomMovePotential, randomMovePotential)));
+        movedir.y = 0f;
+        return movedir.normalized;
     }
 
     private void Update()
@@ -101,7 +103,8 @@ public class Enemy : MonoBehaviour
             Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
         velocity.z =
             Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
-
+        velocity.y =
+            Mathf.MoveTowards(velocity.y, desiredVelocity.y, maxSpeedChange);
         Vector3 displacement = velocity * Time.deltaTime;
         Vector3 newPosition = transform.localPosition + displacement;
         if (newPosition.x < allowedArea.xMin)

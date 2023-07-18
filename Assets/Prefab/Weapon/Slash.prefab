@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b948202ea3ff24d4eaf252360c6fa7b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 0.7
+  cooldown: 0.5
   distFromPlayer: 1.6
 --- !u!114 &2615461844688522540
 MonoBehaviour:
@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9a328cc7f4e5334395db048ce3f5562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   damage: 3
   comboMultiplyer: 1.1
   knockBackDist: 3

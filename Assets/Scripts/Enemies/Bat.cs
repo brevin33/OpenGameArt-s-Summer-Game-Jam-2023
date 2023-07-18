@@ -16,10 +16,10 @@ public class Bat : Enemy
         float randomMovePotential = 1f;
         if (changeDirTimer >= changeDirTimerTime)
         {
-            moveDir = new Vector3(Random.Range(-randomMovePotential, randomMovePotential), Random.Range(-randomMovePotential, randomMovePotential), Random.Range(-randomMovePotential, randomMovePotential)).normalized;
+            moveDir = new Vector3(Random.Range(-randomMovePotential, randomMovePotential), 0, Random.Range(-randomMovePotential, randomMovePotential));
             changeDirTimer = 0f;
         }
         changeDirTimer += Time.deltaTime;
-        return moveDir;
+        return moveDir.normalized;
     }
 }

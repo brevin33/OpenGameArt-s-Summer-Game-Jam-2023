@@ -6,6 +6,9 @@ using UnityEngine.UI;
 using static UnityEngine.UI.Image;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using Unity.Mathematics;
+using Microsoft.Win32.SafeHandles;
+using TMPro;
+using Unity.VisualScripting;
 
 public class Player : MonoBehaviour
 {
@@ -43,6 +46,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     Game game;
 
+    [SerializeField]
+    float attackCooldownTime = 1f;
+
     public Vector3 velocity;
 
     public static Vector3 mousePos;
@@ -50,7 +56,7 @@ public class Player : MonoBehaviour
     public static Vector3 playerPos;
 
     [SerializeField]
-    GameObject[] weapons;
+    List<GameObject> weapons;
 
     bool attacking;
 
@@ -68,14 +74,32 @@ public class Player : MonoBehaviour
 
     bool hitInvulneriblility;
 
+    [SerializeField]
+    TextMeshProUGUI comboText;
+
+    [SerializeField]
+    TextMeshProUGUI damageMultText;
+
+    float textAlpha = 0;
+
     public void hitCombo()
     {
         combo += 1;
+        comboText.text = "combo " + combo.ToString();
+        damageMultText.text = "damage " + (Mathf.Round((Mathf.Pow(1.1f,combo) * 100f))/100f).ToString();
+        if (combo >= 3) {
+            textAlpha = 1;
+        }
     }
 
     public void dropCombo()
     {
         combo = 1;
+    }
+
+    public void pickupWeapon(GameObject weapon)
+    {
+        weapons.Add(weapon);
     }
 
     public void takeDamage(int amount, Vector3 knockBack)
@@ -132,6 +156,11 @@ public class Player : MonoBehaviour
         attack();
 
         flipCharacter();
+
+        textAlpha -= 0.7f * Time.deltaTime;
+
+        comboText.alpha = textAlpha;
+        damageMultText.alpha = textAlpha;
 
         playerPos = transform.position;
     }
@@ -230,18 +259,20 @@ public class Player : MonoBehaviour
         quaternion rotation = Quaternion.LookRotation(facingDir);
         rotation *= Quaternion.Euler(90, 270, 0);
         GameObject hitBox = Instantiate(prefab, spawnPos, rotation);
+        hitBox.GetComponent<Weapon>().player = this;
     }
 
     IEnumerator doAttacks()
     {
         combo = 1;
-        for (int i = 0; i < weapons.Length; i++)
+        for (int i = 0; i < weapons.Count; i++)
         {
             GameObject weapon = weapons[i];
             Stats stats = weapon.GetComponent<Stats>();
             createHitbox(stats.getDistFromPlayer(), weapon);
             yield return new WaitForSeconds(stats.cooldown);
         }
+        yield return new WaitForSeconds(attackCooldownTime);
         attacking = false;
     }
 
