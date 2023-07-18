@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b948202ea3ff24d4eaf252360c6fa7b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 0.5
+  cooldown: 0.3
   distFromPlayer: 1.6
 --- !u!114 &2615461844688522540
 MonoBehaviour:

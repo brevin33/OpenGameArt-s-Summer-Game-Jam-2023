@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
 
     bool facingLeft;
 
-    public static int combo = 1;
+    public static int combo = 0;
 
     bool hitInvulneriblility;
 
@@ -81,6 +81,9 @@ public class Player : MonoBehaviour
     TextMeshProUGUI damageMultText;
 
     float textAlpha = 0;
+
+    [SerializeField]
+    Image reloadBar;
 
     public void hitCombo()
     {
@@ -94,7 +97,7 @@ public class Player : MonoBehaviour
 
     public void dropCombo()
     {
-        combo = 1;
+        combo = 0;
     }
 
     public void pickupWeapon(GameObject weapon)
@@ -267,13 +270,37 @@ public class Player : MonoBehaviour
         combo = 1;
         for (int i = 0; i < weapons.Count; i++)
         {
+            t = 0f;
+            yield return new WaitUntil(nextAttack);
             GameObject weapon = weapons[i];
             Stats stats = weapon.GetComponent<Stats>();
             createHitbox(stats.getDistFromPlayer(), weapon);
             yield return new WaitForSeconds(stats.cooldown);
         }
-        yield return new WaitForSeconds(attackCooldownTime);
+        reloadTime = 0;
+        reloadBar.enabled = true;
+        yield return new WaitUntil(reload);
         attacking = false;
+    }
+
+    float reloadTime;
+    private bool reload()
+    {
+        reloadTime += Time.deltaTime;
+        reloadBar.fillAmount = reloadTime/attackCooldownTime;
+        if (reloadTime > attackCooldownTime) {
+            reloadBar.enabled=false;
+            return true;
+        }
+        return false;
+    }
+
+
+    float t;
+    bool nextAttack()
+    {
+        t += Time.deltaTime;
+        return tryAttacking || t > 2f;
     }
 
     IEnumerator Invulnerablility()
