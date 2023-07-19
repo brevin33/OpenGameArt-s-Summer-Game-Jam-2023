@@ -114,4 +114,5 @@ MonoBehaviour:
   speed: 0.016
   knockBackStrength: 20
   damage: 1
+  HitboxDuration: 2
   player: {fileID: 0}

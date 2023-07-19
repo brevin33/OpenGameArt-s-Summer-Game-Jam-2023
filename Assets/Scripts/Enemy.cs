@@ -9,7 +9,7 @@ using Image = UnityEngine.UI.Image;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    float HP = 6;
+    public float HP = 6;
 
     [SerializeField, Range(0f, 100f)]
     float maxSpeed = 10f;
@@ -36,17 +36,17 @@ public class Enemy : MonoBehaviour
     float knockBackStrength;
 
     [SerializeField]
-    Image healthBar;
+    public Image healthBar;
 
-    Game game;
+    public Game game;
 
-    float maxHP;
+    public float maxHP;
 
     public Vector3 velocity;
 
     bool facingLeft = true;
 
-    float healthBarAlpha = 0;
+    public float healthBarAlpha = 0;
 
     float startWait = 0.55f;
 

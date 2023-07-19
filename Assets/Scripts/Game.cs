@@ -91,7 +91,7 @@ public class Game : MonoBehaviour
         playerScript.velocity = Vector3.zero;
         int r = Random.Range(0, weapons.Length);
         int r2 = Random.Range(0, weapons.Length);
-        while (r2 != r)
+        while (r2 == r)
         {
             r2 = Random.Range(0, weapons.Length);
         }

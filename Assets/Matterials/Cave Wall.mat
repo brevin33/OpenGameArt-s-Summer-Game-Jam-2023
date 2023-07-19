@@ -112,7 +112,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.1
+    - _Smoothness: 0.07
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -120,7 +120,7 @@ Material:
     - _TileAmount: 8
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - _ambient: 0.8
+    - _ambient: 0.2
     - _metallic: 10.51
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
