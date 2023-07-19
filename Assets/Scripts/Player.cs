@@ -125,6 +125,7 @@ public class Player : MonoBehaviour
         StartCoroutine(Invulnerablility());
     }
 
+
     public void gainHP( int amount)
     {
         if (HP+amount > 9)
@@ -148,6 +149,7 @@ public class Player : MonoBehaviour
         for (int i = 0; i < HP; i++) {
             Hearts[i].SetActive(true);
         }
+        combo = 0;
     }
 
     void Update()
@@ -267,10 +269,9 @@ public class Player : MonoBehaviour
 
     IEnumerator doAttacks()
     {
-        combo = 1;
-        for (int i = 0; i < weapons.Count; i++)
+        combo = 0;
+        for (int i = weapons.Count-1; i >= 0; i--)
         {
-            t = 0f;
             yield return new WaitUntil(nextAttack);
             GameObject weapon = weapons[i];
             Stats stats = weapon.GetComponent<Stats>();
@@ -295,12 +296,15 @@ public class Player : MonoBehaviour
         return false;
     }
 
-
     float t;
     bool nextAttack()
     {
         t += Time.deltaTime;
-        return tryAttacking || t > 2f;
+        if (t > 1.5f)
+        {
+            combo = 0;
+        }
+        return tryAttacking;
     }
 
     IEnumerator Invulnerablility()

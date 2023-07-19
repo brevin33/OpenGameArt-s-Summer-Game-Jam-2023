@@ -12,6 +12,9 @@ public class Door : MonoBehaviour
     [SerializeField]
     Game game;
 
+    [SerializeField]
+    bool RightDoor;
+
     public bool isOpen = false;
 
     SpriteRenderer renderer;
@@ -39,7 +42,7 @@ public class Door : MonoBehaviour
         {
             if (isOpen)
             {
-                game.goNextLevel();
+                game.goNextLevel(RightDoor);
                 game.closeDoors();
             }
         }

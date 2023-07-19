@@ -8,10 +8,13 @@ public class WeaponPickup : MonoBehaviour
     public GameObject weapon;
     public Player player;
 
+    [SerializeField]
     SpriteRenderer spriteRenderer;
 
-    public void setSprite(Sprite sprite)
+    public void setup(GameObject w, Player p, Sprite sprite)
     {
+        player = p;
+        weapon = w;
         spriteRenderer.sprite = sprite;
     }
 

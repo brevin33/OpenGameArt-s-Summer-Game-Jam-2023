@@ -25,6 +25,7 @@ public class Slash : Weapon
     private void Start()
     {
         p = player.GetComponent<Player>();
+        transform.localScale *= 2f;
     }
 
     private void Update()
