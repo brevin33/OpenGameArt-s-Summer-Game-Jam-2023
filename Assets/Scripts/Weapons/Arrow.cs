@@ -6,7 +6,7 @@ using UnityEngine;
 public class Arrow : Weapon
 {
     [SerializeField]
-    int damage = 3;
+    float damage = 3;
 
     [SerializeField]
     float comboMultiplyer = 1.1f;
@@ -27,11 +27,15 @@ public class Arrow : Weapon
 
     bool hit = false;
 
-    Vector3 moveDir;
+    public bool updateCombo = true;
+
+    public Barrage barrage = null;
+
+    public Vector3 moveDir;
 
     private void Start()
     {
-        moveDir = transform.position - player.transform.position;
+        moveDir = (transform.position - player.transform.position).normalized;
         transform.rotation *= Quaternion.Euler(0, 0, -225);
         p = player.GetComponent<Player>();
     }
@@ -41,49 +45,77 @@ public class Arrow : Weapon
         Vector3 newPosition = transform.position + moveDir * speed;
         if (newPosition.x < allowedArea.xMin)
         {
-            if (hit)
+            if (updateCombo)
             {
-                p.hitCombo();
+                if (hit)
+                {
+                    p.hitCombo();
+                }
+                else
+                {
+                    p.dropCombo();
+                }
             }
             else
             {
-                p.dropCombo();
+                barrage.hit = barrage.hit || hit;
             }
             Destroy(gameObject);
         }
         else if (newPosition.x > allowedArea.xMax)
         {
-            if (hit)
+            if (updateCombo)
             {
-                p.hitCombo();
+                if (hit)
+                {
+                    p.hitCombo();
+                }
+                else
+                {
+                    p.dropCombo();
+                }
             }
             else
             {
-                p.dropCombo();
+                barrage.hit = barrage.hit || hit;
             }
             Destroy(gameObject);
         }
         if (newPosition.z < allowedArea.yMin)
         {
-            if (hit)
+            if (updateCombo)
             {
-                p.hitCombo();
+                if (hit)
+                {
+                    p.hitCombo();
+                }
+                else
+                {
+                    p.dropCombo();
+                }
             }
             else
             {
-                p.dropCombo();
+                barrage.hit = barrage.hit || hit;
             }
             Destroy(gameObject);
         }
         else if (newPosition.z > allowedArea.yMax)
         {
-            if (hit)
+            if (updateCombo)
             {
-                p.hitCombo();
+                if (hit)
+                {
+                    p.hitCombo();
+                }
+                else
+                {
+                    p.dropCombo();
+                }
             }
             else
             {
-                p.dropCombo();
+                barrage.hit = barrage.hit || hit;
             }
             Destroy(gameObject);
         }
@@ -91,13 +123,20 @@ public class Arrow : Weapon
         HitboxDuration -= Time.deltaTime;
         if (HitboxDuration <= 0)
         {
-            if (hit)
+            if (updateCombo)
             {
-                p.hitCombo();
+                if (hit)
+                {
+                    p.hitCombo();
+                }
+                else
+                {
+                    p.dropCombo();
+                }
             }
             else
             {
-                p.dropCombo();
+                barrage.hit = barrage.hit || hit;
             }
             Destroy(gameObject);
         }
@@ -112,7 +151,14 @@ public class Arrow : Weapon
             knockBack.y = 0;
             knockBack = knockBack.normalized * knockBackDist;
             other.GetComponent<Enemy>().Hit(knockBack, damage * Mathf.Pow(comboMultiplyer, Player.combo));
-            p.hitCombo();
+            if (updateCombo)
+            {
+                p.hitCombo();
+            }
+            else
+            {
+                barrage.hit = barrage.hit || hit;
+            }
             Destroy(gameObject);
         }
     }
