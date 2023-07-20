@@ -46,7 +46,6 @@ public class Dragon : Enemy
             }
             changeDirTimer = 0;
         }
-        float randomMovePotential = 0.7f;
         Vector3 moveDir;
         if (Vector3.Distance(transform.position,playerPos.position) < circleDist)
         {
