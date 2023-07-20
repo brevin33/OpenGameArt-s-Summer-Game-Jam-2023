@@ -75,7 +75,10 @@ public class Enemy : MonoBehaviour
             game.EnemyDied();
             Destroy(gameObject);
         }
-        velocity = knockBack;
+        if(knockBack.x > 0 && knockBack.y > 0)
+        {
+            velocity = knockBack;
+        }
     }
 
     public virtual Vector3 path()

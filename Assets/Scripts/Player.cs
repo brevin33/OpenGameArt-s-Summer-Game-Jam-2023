@@ -275,7 +275,7 @@ public class Player : MonoBehaviour
             yield return new WaitUntil(nextAttack);
             GameObject weapon = weapons[i];
             Stats stats = weapon.GetComponent<Stats>();
-            createHitbox(stats.getDistFromPlayer(), weapon);
+            createHitbox(stats.getDistFromPlayer(mousePos,playerPos), weapon);
             yield return new WaitForSeconds(stats.cooldown);
         }
         reloadTime = 0;

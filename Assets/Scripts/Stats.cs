@@ -10,7 +10,7 @@ public class Stats : MonoBehaviour
     public float distFromPlayer;
 
 
-    public virtual float getDistFromPlayer()
+    public virtual float getDistFromPlayer(Vector3 mousePos, Vector3 playerPos)
     {
         return distFromPlayer;
     }
