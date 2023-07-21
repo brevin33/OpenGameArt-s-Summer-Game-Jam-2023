@@ -47,6 +47,9 @@ public class Game : MonoBehaviour
     [SerializeField]
     SpriteRenderer[] nextRoomWeaponBannersSpriteRender;
 
+    [SerializeField]
+    GameObject godRays;
+
 
     public int place = 0;
 
@@ -69,6 +72,7 @@ public class Game : MonoBehaviour
             {
                 doors[i].openDoor();
             }
+            godRays.SetActive(true);
             spawnWeaponPickup();
         }
     }
@@ -82,6 +86,7 @@ public class Game : MonoBehaviour
     public void goNextLevel(bool door)
     {
         selectedWeapon = door ? weapon1 : weapon2;
+        godRays.SetActive(false);
         if (selectedWeapon == null)
         {
             selectedWeapon = weapons[Random.Range(0,weapons.Length)];
