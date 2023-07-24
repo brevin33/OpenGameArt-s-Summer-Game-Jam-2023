@@ -50,6 +50,9 @@ public class Game : MonoBehaviour
     [SerializeField]
     GameObject godRays;
 
+    [SerializeField]
+    GameObject[] controls;
+
 
     public int place = 0;
 
@@ -85,6 +88,8 @@ public class Game : MonoBehaviour
 
     public void goNextLevel(bool door)
     {
+        controls[0].SetActive(false);
+        controls[1].SetActive(false);
         selectedWeapon = door ? weapon1 : weapon2;
         godRays.SetActive(false);
         if (selectedWeapon == null)
