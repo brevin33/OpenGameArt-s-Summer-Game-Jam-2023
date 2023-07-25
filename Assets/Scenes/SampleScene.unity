@@ -180,6 +180,9 @@ MonoBehaviour:
   - {fileID: 671606501}
   - {fileID: 1403681668}
   godRays: {fileID: 660739993}
+  controls:
+  - {fileID: 864774271}
+  - {fileID: 605270072}
   place: 0
 --- !u!4 &78410120
 Transform:
@@ -972,7 +975,7 @@ Transform:
   m_GameObject: {fileID: 605270072}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -2, y: 0.01, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -6238,7 +6241,7 @@ Transform:
   m_GameObject: {fileID: 864774271}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 2, y: 0.01, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 3, y: 3, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
