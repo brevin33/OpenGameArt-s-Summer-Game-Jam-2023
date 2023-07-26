@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 157662385, guid: 2c2d4ce1910715141825b62315df7798, type: 3}
       propertyPath: damage
-      value: 1.2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 157662385, guid: 2c2d4ce1910715141825b62315df7798, type: 3}
       propertyPath: knockBackDist

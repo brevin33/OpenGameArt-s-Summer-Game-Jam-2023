@@ -169,7 +169,7 @@ MonoBehaviour:
   maxHP: 35
   velocity: {x: 0, y: 0, z: 0}
   healthBarAlpha: 0
-  fireBallcooldownTime: 2
+  fireBallcooldownTime: 3
   fireball: {fileID: 1537219521027189804, guid: db0ec9804ff3217448234e447bddbad6,
     type: 3}
   changeDirTimerTime: 3

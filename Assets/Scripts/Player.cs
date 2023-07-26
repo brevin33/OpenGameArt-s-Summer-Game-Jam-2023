@@ -9,6 +9,7 @@ using Unity.Mathematics;
 using Microsoft.Win32.SafeHandles;
 using TMPro;
 using Unity.VisualScripting;
+using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
@@ -56,7 +57,7 @@ public class Player : MonoBehaviour
     public static Vector3 playerPos;
 
     [SerializeField]
-    List<GameObject> weapons;
+    public List<GameObject> weapons;
 
     bool attacking;
 
@@ -85,6 +86,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     Image reloadBar;
 
+    public int c;
+
+    bool gameOver;
     public void hitCombo()
     {
         combo += 1;
@@ -97,6 +101,7 @@ public class Player : MonoBehaviour
 
     public void dropCombo()
     {
+        Debug.Log(combo);
         combo = 0;
     }
 
@@ -107,6 +112,7 @@ public class Player : MonoBehaviour
 
     public void takeDamage(int amount, Vector3 knockBack)
     {
+        c = combo;
         if (hitInvulneriblility)
         {
             return;
@@ -119,6 +125,7 @@ public class Player : MonoBehaviour
         if (HP <= 0)
         {
             game.gameOver();
+            gameOver = true;
         }
         velocity = knockBack;
         hitInvulneriblility = true;
@@ -154,6 +161,10 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (gameOver)
+        {
+            return;
+        }
         getInput();
 
         WASDMovment();
@@ -272,6 +283,7 @@ public class Player : MonoBehaviour
         combo = 0;
         for (int i = weapons.Count-1; i >= 0; i--)
         {
+            t = 0;
             yield return new WaitUntil(nextAttack);
             GameObject weapon = weapons[i];
             Stats stats = weapon.GetComponent<Stats>();

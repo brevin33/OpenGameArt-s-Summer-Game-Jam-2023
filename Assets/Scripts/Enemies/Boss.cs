@@ -36,6 +36,11 @@ public class Boss : Enemy
             game.EnemyDied();
             Destroy(gameObject);
         }
+        else if (hitfalshTimer > 0.4f)
+        {
+            hitfalshTimer = 0;
+            StartCoroutine(flashWhite());
+        }
     }
 
     public override Vector3 path()

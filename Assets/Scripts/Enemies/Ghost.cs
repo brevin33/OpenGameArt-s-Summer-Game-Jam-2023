@@ -19,13 +19,41 @@ public class Ghost : Enemy
 
     SpriteRenderer ghost;
 
-    Material mat;
+    Material mat2;
 
     private void Awake()
     {
         circleDist = Random.Range(2.6f, 3.2f);
         ghost = GetComponent<SpriteRenderer>();
-        mat = ghost.material;
+        mat2 = ghost.material;
+    }
+
+    public override void Hit(Vector3 knockBack, float damage)
+    {
+        HP -= damage;
+        healthBar.fillAmount = HP / maxHP;
+        healthBarAlpha = 1;
+        if (HP <= 0)
+        {
+            game.EnemyDied();
+            Destroy(gameObject);
+        }
+        else if (hitfalshTimer > 0.4f)
+        {
+            hitfalshTimer = 0;
+            StartCoroutine(flashWhite2());
+        }
+        if (knockBack.magnitude > 0)
+        {
+            velocity = knockBack;
+        }
+    }
+
+    public IEnumerator flashWhite2()
+    {
+        mat2.SetInt("_white", 1);
+        yield return new WaitForSeconds(0.3f);
+        mat2.SetInt("_white", 0);
     }
 
     public override Vector3 path()
@@ -48,7 +76,7 @@ public class Ghost : Enemy
 
         Vector3 moveDir;
 
-        float alpha = mat.GetFloat("_Alpha");
+        float alpha = mat2.GetFloat("_Alpha");
 
         if (Vector3.Distance(transform.position, playerPos.position) < circleDist - 0.7f)
         {
@@ -57,14 +85,14 @@ public class Ghost : Enemy
 
         if (Vector3.Distance(transform.position, playerPos.position) < circleDist + 1.1f && circleDir == 0)
         {
-            mat.SetFloat("_Alpha", Mathf.Lerp(0, 1, alpha + visibiilityChangeSpeed * Time.deltaTime));
+            mat2.SetFloat("_Alpha", Mathf.Lerp(0, 1, alpha + visibiilityChangeSpeed * Time.deltaTime));
         }
         else if(Vector3.Distance(transform.position, playerPos.position) < circleDist - .4f)
         {
-            mat.SetFloat("_Alpha", Mathf.Lerp(0, 1, alpha + visibiilityChangeSpeed * Time.deltaTime));
+            mat2.SetFloat("_Alpha", Mathf.Lerp(0, 1, alpha + visibiilityChangeSpeed * Time.deltaTime));
         }
         else {
-            mat.SetFloat("_Alpha", Mathf.Lerp(0, 1, alpha - visibiilityChangeSpeed* Time.deltaTime));
+            mat2.SetFloat("_Alpha", Mathf.Lerp(0, 1, alpha - visibiilityChangeSpeed* Time.deltaTime));
         }
 if (Vector3.Distance(transform.position, playerPos.position) < circleDist)
         {

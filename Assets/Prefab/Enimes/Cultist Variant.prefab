@@ -16,7 +16,7 @@ PrefabInstance:
     - target: {fileID: 9156531497762454558, guid: 86ae9673dff37f043b729e02b6e9f42c,
         type: 3}
       propertyPath: m_Name
-      value: Cultist
+      value: Cultist Variant
       objectReference: {fileID: 0}
     - target: {fileID: 9156531497762454563, guid: 86ae9673dff37f043b729e02b6e9f42c,
         type: 3}
@@ -146,6 +146,6 @@ MonoBehaviour:
   maxHP: 0
   velocity: {x: 0, y: 0, z: 0}
   healthBarAlpha: 0
-  fireBallcooldownTime: 1
+  fireBallcooldownTime: 2.6
   fireball: {fileID: 1537219521027189804, guid: db0ec9804ff3217448234e447bddbad6,
     type: 3}

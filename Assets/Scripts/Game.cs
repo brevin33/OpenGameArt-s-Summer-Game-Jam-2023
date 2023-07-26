@@ -6,6 +6,7 @@ using Unity.Mathematics;
 using UnityEditor.SceneManagement;
 using UnityEditor.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
@@ -30,7 +31,22 @@ public class Game : MonoBehaviour
     [SerializeField]
     Door[] doors;
 
-    List<List<int>> stageEnimes = new List<List<int>> { new List<int> { 0 }, new List<int> { 0 } };
+    [SerializeField]
+    GameObject rareSpawn;
+
+    List<List<int>> stageEnimes = new List<List<int>> { new List<int> { 0 },
+        new List<int> { 0 },
+        new List<int> { 0,1 },
+        new List<int> { 0,1 },
+        new List<int> { 0, 1, 2 },
+        new List<int> { 0, 1, 2, 3 },
+        new List<int> { 2,3 },
+        new List<int> { 2,3,4},
+        new List<int> { 3,4,5 },
+        new List<int> { 3,4,5 },
+        new List<int> { 6 }};
+
+    List<int> numEnimes = new List<int> { 3,3,4,5,4,4,4,4,4,5,1};
 
     [SerializeField]
     Transform newRoomPlayerSpawnPos;
@@ -53,6 +69,11 @@ public class Game : MonoBehaviour
     [SerializeField]
     GameObject[] controls;
 
+    [SerializeField]
+    GameObject winScreen;
+
+    [SerializeField]
+    GameObject loseScreen;
 
     public int place = 0;
 
@@ -63,11 +84,13 @@ public class Game : MonoBehaviour
     private void Awake()
     {
         playerScript = player.GetComponent<Player>();
+        playerScript.weapons.Add(weapons[Random.Range(0,weapons.Length)]);
     }
 
 
     public void EnemyDied()
     {
+        Debug.Log(aliveEnemies);
         aliveEnemies--;
         if (aliveEnemies <= 0)
         {
@@ -97,6 +120,11 @@ public class Game : MonoBehaviour
             selectedWeapon = weapons[Random.Range(0,weapons.Length)];
         }
         place++;
+        if (place >= stageEnimes.Count)
+        {
+            winScreen.SetActive(true);
+            return;
+        }
         player.transform.position = newRoomPlayerSpawnPos.position;
         playerScript.velocity = Vector3.zero;
         int r = Random.Range(0, weapons.Length);
@@ -111,12 +139,12 @@ public class Game : MonoBehaviour
         nextRoomWeaponBanners[0].transform.localScale = weapon1.transform.localScale;
         nextRoomWeaponBannersSpriteRender[1].sprite = weapon2.GetComponent<SpriteRenderer>().sprite;
         nextRoomWeaponBanners[1].transform.localScale = weapon2.transform.localScale;
-        spawnEnemies(4);
+        spawnEnemies(numEnimes[place]);
     }
 
     public void gameOver()
     {
-
+        loseScreen.SetActive(true);
     }
 
 
@@ -126,6 +154,11 @@ public class Game : MonoBehaviour
         {
             doors[i].closeDoor();
         }
+    }
+
+    public void restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 
@@ -150,9 +183,21 @@ public class Game : MonoBehaviour
                 float zPos = Random.Range(-2.8f, 2.8f);
                 spawnPos = new Vector3(xPos, 0.4f, zPos);
             };
-            int r = Random.Range(0, stageEnimes[place].Count);
-            GameObject e = Instantiate(enimes[stageEnimes[place][r]], spawnPos, Quaternion.identity);
-            e.GetComponent<Enemy>().setup(player, this);
+            int rareEnemy = Random.Range(0,1000);
+            if (rareEnemy == 0)
+            {
+                GameObject e = Instantiate(rareSpawn, spawnPos, Quaternion.identity);
+            }
+            else
+            {
+                int r = Random.Range(0, stageEnimes[place].Count);
+                if (r == 6)
+                {
+                    spawnPos.y += 0.5f;
+                }
+                GameObject e = Instantiate(enimes[stageEnimes[place][r]], spawnPos, Quaternion.identity);
+                e.GetComponent<Enemy>().setup(player, this);
+            }
         }
         aliveEnemies = amount;
     }

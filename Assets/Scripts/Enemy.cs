@@ -50,8 +50,13 @@ public class Enemy : MonoBehaviour
 
     float startWait = 0.55f;
 
+    Material mat;
+
+    public float hitfalshTimer = 0;
+
     private void Start()
     {
+        mat = GetComponent<SpriteRenderer>().material;
         maxHP = HP;
     }
 
@@ -75,7 +80,12 @@ public class Enemy : MonoBehaviour
             game.EnemyDied();
             Destroy(gameObject);
         }
-        if(knockBack.x > 0 && knockBack.y > 0)
+        else if (hitfalshTimer > 0.4f)
+        {
+            hitfalshTimer = 0;
+            StartCoroutine(flashWhite());
+        }
+        if (knockBack.magnitude > 0)
         {
             velocity = knockBack;
         }
@@ -91,6 +101,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        hitfalshTimer += Time.deltaTime;
         startWait -= Time.deltaTime;
         healthBar.color = new Color(1, 0, 0, healthBarAlpha);
         if (startWait > 0)
@@ -137,16 +148,23 @@ public class Enemy : MonoBehaviour
 
     private void flipCharacter()
     {
-        if (facingLeft && velocity.x > 0)
+        if (facingLeft && velocity.x > 0.5f)
         {
             facingLeft = false;
             transform.localScale = Vector3.Scale(transform.localScale, new Vector3(-1,1,1));
         }
-        else if (!facingLeft && velocity.x < 0)
+        else if (!facingLeft && velocity.x < -0.5f)
         {
             facingLeft = true;
             transform.localScale = Vector3.Scale(transform.localScale, new Vector3(-1, 1, 1));
         }
+    }
+
+    public IEnumerator flashWhite()
+    {
+        mat.SetInt("_white",1);
+        yield return new WaitForSeconds(0.3f);
+        mat.SetInt("_white", 0);
     }
 
     private void OnTriggerEnter(Collider other)
