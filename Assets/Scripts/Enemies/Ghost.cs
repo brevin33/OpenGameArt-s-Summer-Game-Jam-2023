@@ -51,6 +51,7 @@ public class Ghost : Enemy
 
     public IEnumerator flashWhite2()
     {
+        soundManager.enemyHurt();
         mat2.SetInt("_white", 1);
         yield return new WaitForSeconds(0.3f);
         mat2.SetInt("_white", 0);

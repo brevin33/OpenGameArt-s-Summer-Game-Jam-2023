@@ -75,15 +75,15 @@ public class Enemy : MonoBehaviour
         HP -= damage;
         healthBar.fillAmount = HP/maxHP;
         healthBarAlpha = 1;
+        if (hitfalshTimer > 0.4f)
+        {
+            hitfalshTimer = 0;
+            StartCoroutine(flashWhite());
+        }
         if (HP <= 0)
         {
             game.EnemyDied();
             Destroy(gameObject);
-        }
-        else if (hitfalshTimer > 0.4f)
-        {
-            hitfalshTimer = 0;
-            StartCoroutine(flashWhite());
         }
         if (knockBack.magnitude > 0)
         {
@@ -162,6 +162,7 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator flashWhite()
     {
+        soundManager.enemyHurt();
         mat.SetInt("_white",1);
         yield return new WaitForSeconds(0.3f);
         mat.SetInt("_white", 0);

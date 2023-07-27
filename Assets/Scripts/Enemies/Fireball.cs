@@ -30,7 +30,7 @@ public class Fireball : MonoBehaviour
 
     private void Update()
     {
-        transform.position += moveDir * speed;
+        transform.position += moveDir * speed * Time.deltaTime;
         HitboxDuration -= Time.deltaTime;
         if (HitboxDuration <= 0)
         {

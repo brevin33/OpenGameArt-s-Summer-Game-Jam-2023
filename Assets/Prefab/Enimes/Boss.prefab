@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d8bb6ef13746e74d81ee8e7857f2fb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 35
+  HP: 60
   maxSpeed: 7
   maxAcceleration: 5
   bounciness: 1
@@ -169,7 +169,8 @@ MonoBehaviour:
   maxHP: 35
   velocity: {x: 0, y: 0, z: 0}
   healthBarAlpha: 0
-  fireBallcooldownTime: 3
+  hitfalshTimer: 0
+  fireBallcooldownTime: 2.5
   fireball: {fileID: 1537219521027189804, guid: db0ec9804ff3217448234e447bddbad6,
     type: 3}
   changeDirTimerTime: 3

@@ -26,6 +26,12 @@ public class Boss : Enemy
     float savedVelocityMagnitude;
 
 
+    private void Awake()
+    {
+        transform.position = new Vector3(0,1f,0) ;
+        timer2 = 3;
+    }
+
     public override void Hit(Vector3 knockBack, float damage)
     {
         HP -= damage;

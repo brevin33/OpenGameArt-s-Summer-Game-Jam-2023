@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c510952ae0221ae4b8b19ed3d5bef684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 9
+  HP: 14
   maxSpeed: 17
   maxAcceleration: 3
   bounciness: 0.275
@@ -192,6 +192,11 @@ MonoBehaviour:
     height: 5.9
   knockBackStrength: 40
   healthBar: {fileID: 5716097084903464873}
+  game: {fileID: 0}
+  maxHP: 0
+  velocity: {x: 0, y: 0, z: 0}
+  healthBarAlpha: 0
+  hitfalshTimer: 0
 --- !u!54 &6458699548563040956
 Rigidbody:
   m_ObjectHideFlags: 0

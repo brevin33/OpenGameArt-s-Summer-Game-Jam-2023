@@ -9,11 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 157662385, guid: 2c2d4ce1910715141825b62315df7798, type: 3}
       propertyPath: speed
-      value: 0.04
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 157662385, guid: 2c2d4ce1910715141825b62315df7798, type: 3}
       propertyPath: damage
-      value: 1.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 157662385, guid: 2c2d4ce1910715141825b62315df7798, type: 3}
       propertyPath: knockBackDist

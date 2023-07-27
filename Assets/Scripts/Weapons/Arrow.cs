@@ -42,7 +42,7 @@ public class Arrow : Weapon
 
     private void Update()
     {
-        Vector3 newPosition = transform.position + moveDir * speed;
+        Vector3 newPosition = transform.position + moveDir * speed * Time.deltaTime;
         if (newPosition.x < allowedArea.xMin)
         {
             if (updateCombo)
@@ -119,7 +119,7 @@ public class Arrow : Weapon
             }
             Destroy(gameObject);
         }
-        transform.position += moveDir * speed;
+        transform.position = newPosition;
         HitboxDuration -= Time.deltaTime;
         if (HitboxDuration <= 0)
         {

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1605975457640319323}
   m_Layer: 0
   m_Name: Barrage
-  m_TagString: Untagged
+  m_TagString: attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,6 +129,6 @@ MonoBehaviour:
   player: {fileID: 0}
   fireRate: 0.17
   Arrow: {fileID: 3564079758234437908, guid: f25afb4c432ec8445aecbc5271e8f3dc, type: 3}
-  barrageScatter: 0.18
+  barrageScatter: 0.13
   HitboxDuration: 1
   hit: 0

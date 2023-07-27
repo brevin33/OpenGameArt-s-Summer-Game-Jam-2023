@@ -1,10 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Unity.Mathematics;
-using UnityEditor.SceneManagement;
-using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
@@ -36,17 +30,17 @@ public class Game : MonoBehaviour
 
     List<List<int>> stageEnimes = new List<List<int>> { new List<int> { 0 },
         new List<int> { 0 },
+        new List<int> { 0,1},
         new List<int> { 0,1 },
-        new List<int> { 0,1 },
-        new List<int> { 0, 1, 2 },
-        new List<int> { 0, 1, 2, 3 },
+        new List<int> { 1, 2 },
+        new List<int> { 1, 2, 3 },
         new List<int> { 2,3 },
         new List<int> { 2,3,4},
         new List<int> { 3,4,5 },
         new List<int> { 3,4,5 },
         new List<int> { 6 }};
 
-    List<int> numEnimes = new List<int> { 3,3,4,5,4,4,4,4,4,5,1};
+    List<int> numEnimes = new List<int> { 3,3,4,5,5,5,5,5,5,6,1};
 
     [SerializeField]
     Transform newRoomPlayerSpawnPos;
@@ -81,10 +75,16 @@ public class Game : MonoBehaviour
 
     Player playerScript;
 
+    bool everyOtherRound = false;
+
     private void Awake()
     {
         playerScript = player.GetComponent<Player>();
-        playerScript.weapons.Add(weapons[Random.Range(0,weapons.Length)]);
+        GameObject w = weapons[Random.Range(0, weapons.Length)];
+        playerScript.weapons.Add(w);
+        playerScript.previewWeapon.sprite = w.GetComponent<SpriteRenderer>().sprite;
+        playerScript.previewWeapon.transform.localScale = w.transform.localScale;
+        playerScript.previewWeapon.SetNativeSize();
     }
 
 
@@ -94,6 +94,16 @@ public class Game : MonoBehaviour
         aliveEnemies--;
         if (aliveEnemies <= 0)
         {
+            soundManager.enimesBeat();
+            if (playerScript.HP <= 1 && everyOtherRound)
+            {
+                playerScript.gainHP(2);
+            }
+            else if (playerScript.HP < 4 && everyOtherRound)
+            {
+                playerScript.gainHP(1);
+            }
+            everyOtherRound = !everyOtherRound;
             for (int i = 0;i < doors.Length; i++)
             {
                 doors[i].openDoor();
@@ -122,6 +132,7 @@ public class Game : MonoBehaviour
         place++;
         if (place >= stageEnimes.Count)
         {
+            soundManager.winGame();
             winScreen.SetActive(true);
             return;
         }
@@ -144,6 +155,7 @@ public class Game : MonoBehaviour
 
     public void gameOver()
     {
+        soundManager.loseGame();
         loseScreen.SetActive(true);
     }
 
@@ -191,10 +203,6 @@ public class Game : MonoBehaviour
             else
             {
                 int r = Random.Range(0, stageEnimes[place].Count);
-                if (r == 6)
-                {
-                    spawnPos.y += 0.5f;
-                }
                 GameObject e = Instantiate(enimes[stageEnimes[place][r]], spawnPos, Quaternion.identity);
                 e.GetComponent<Enemy>().setup(player, this);
             }

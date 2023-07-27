@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8827422542085048034}
   m_Layer: 0
   m_Name: ornamented_arrow (1)
-  m_TagString: Untagged
+  m_TagString: attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,7 +96,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3589877074611571551}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 3.5
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209d9e09e6524f14fa91462ce76b9f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 0.3
+  cooldown: 0.4
   distFromPlayer: -1
 --- !u!1 &6733834347046268065
 GameObject:
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 1135391001222904591}
   m_Layer: 0
   m_Name: Particle System
-  m_TagString: Untagged
+  m_TagString: attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

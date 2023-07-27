@@ -16,6 +16,10 @@ public class soundManager : MonoBehaviour
     private AudioSource enemyHurtSound;
     [SerializeField]
     private AudioSource enimesBeatSound;
+    [SerializeField]
+    private AudioSource pickupSound;
+    [SerializeField]
+    private AudioSource walkSound;
 
 
 
@@ -25,6 +29,8 @@ public class soundManager : MonoBehaviour
     static AudioSource playerHurtSoundS;
     static AudioSource enemyHurtSoundS;
     static AudioSource enimesBeatSoundS;
+    static AudioSource pickupSoundS;
+    static AudioSource walkSoundS;
 
 
 
@@ -39,7 +45,8 @@ public class soundManager : MonoBehaviour
         playerHurtSoundS = playerHurtSound;
         enemyHurtSoundS=enemyHurtSound;
         enimesBeatSoundS = enimesBeatSound;
-
+        pickupSoundS = pickupSound;
+        walkSoundS = walkSound;
     }
 
     public static void winGame()
@@ -71,4 +78,16 @@ public class soundManager : MonoBehaviour
     {
         enimesBeatSoundS.Play();
     }
+
+    public static void pickup()
+    {
+        pickupSoundS.Play();
+    }
+    public static void walk()
+    {
+        walkSoundS.Play();
+    }
+
+
+
 }

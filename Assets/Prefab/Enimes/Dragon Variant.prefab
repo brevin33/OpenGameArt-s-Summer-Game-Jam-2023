@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 6458699548563040896, guid: 582bf3ccc40cbe448a104af6a94679e5,
         type: 3}
       propertyPath: m_Name
-      value: Dragon
+      value: Dragon Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6458699548563040898, guid: 582bf3ccc40cbe448a104af6a94679e5,
         type: 3}
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38deab46d7879a64799c9a68fa8e2265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 10
+  HP: 16
   maxSpeed: 3
   maxAcceleration: 3
   bounciness: 0
@@ -142,7 +142,11 @@ MonoBehaviour:
     height: 5.9
   knockBackStrength: 20
   healthBar: {fileID: 7629319750837602615}
+  game: {fileID: 0}
+  maxHP: 0
   velocity: {x: 0, y: 0, z: 0}
+  healthBarAlpha: 0
+  hitfalshTimer: 0
   fireBallcooldownTime: 2
   fireball: {fileID: 1537219521027189804, guid: db0ec9804ff3217448234e447bddbad6,
     type: 3}

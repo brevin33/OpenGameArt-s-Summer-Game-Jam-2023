@@ -327,7 +327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2088f965a81023548b8ded55fb0fdbff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 8
+  HP: 10
   maxSpeed: 2.5
   maxAcceleration: 4
   bounciness: 0
@@ -346,5 +346,6 @@ MonoBehaviour:
   maxHP: 0
   velocity: {x: 0, y: 0, z: 0}
   healthBarAlpha: 0
+  hitfalshTimer: 0
   changeDirTimerTime: 2
   visibiilityChangeSpeed: 1

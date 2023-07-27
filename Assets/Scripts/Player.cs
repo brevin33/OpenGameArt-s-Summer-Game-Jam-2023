@@ -1,15 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.IMGUI.Controls.CapsuleBoundsHandle;
 using UnityEngine.UI;
-using static UnityEngine.UI.Image;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using Unity.Mathematics;
-using Microsoft.Win32.SafeHandles;
 using TMPro;
-using Unity.VisualScripting;
-using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
@@ -30,7 +24,7 @@ public class Player : MonoBehaviour
     Rect allowedArea = new Rect(-2.5f, -2.93f, 5f, 5.9f);
 
     [SerializeField]
-    int HP;
+    public int HP;
 
     [SerializeField]
     GameObject[] Hearts;
@@ -86,9 +80,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     Image reloadBar;
 
+    [SerializeField]
+    public Image previewWeapon;
+
     public int c;
 
     bool gameOver;
+
+    float soundTimer = 0f;
     public void hitCombo()
     {
         combo += 1;
@@ -112,11 +111,11 @@ public class Player : MonoBehaviour
 
     public void takeDamage(int amount, Vector3 knockBack)
     {
-        c = combo;
         if (hitInvulneriblility)
         {
             return;
         }
+        soundManager.playerHurt();
         for (int i = Mathf.Max(HP-amount, 0); i < HP; i++)
         {
             Hearts[i].SetActive(false);
@@ -190,6 +189,7 @@ public class Player : MonoBehaviour
         if (tryAttacking)
         {
             attacking = true;
+            soundManager.attack();
             StartCoroutine(doAttacks());
         }
     }
@@ -199,7 +199,12 @@ public class Player : MonoBehaviour
         playerInput.x = Input.GetAxis("Horizontal");
         playerInput.y = Input.GetAxis("Vertical");
         playerInput = Vector2.ClampMagnitude(playerInput, 1f);
-
+        soundTimer += Time.deltaTime;
+        if (soundTimer > .4f && playerInput.sqrMagnitude > 0)
+        {
+            soundTimer = 0f;
+            soundManager.walk();
+        }
         if (Input.GetButtonDown("Fire1"))
         {
             tryAttacking = true;
@@ -208,10 +213,12 @@ public class Player : MonoBehaviour
         {
             tryAttacking= false;
         }
+
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, mousePosHits))
+        if (Physics.Raycast(ray, out RaycastHit raycastHit, 99, mousePosHits))
         {
             mousePos = new Vector3( raycastHit.point.x, 0.5f, raycastHit.point.z);
+            Debug.Log(mousePos);
         }
     }
 
@@ -284,14 +291,20 @@ public class Player : MonoBehaviour
         for (int i = weapons.Count-1; i >= 0; i--)
         {
             t = 0;
-            yield return new WaitUntil(nextAttack);
             GameObject weapon = weapons[i];
+            previewWeapon.sprite = weapon.GetComponent<SpriteRenderer>().sprite;
+            previewWeapon.transform.localScale = weapon.transform.localScale;
+            previewWeapon.SetNativeSize();
+            yield return new WaitUntil(nextAttack);
             Stats stats = weapon.GetComponent<Stats>();
             createHitbox(stats.getDistFromPlayer(mousePos,playerPos), weapon);
             yield return new WaitForSeconds(stats.cooldown);
         }
         reloadTime = 0;
         reloadBar.enabled = true;
+        previewWeapon.sprite = weapons[weapons.Count-1].GetComponent<SpriteRenderer>().sprite;
+        previewWeapon.transform.localScale = weapons[weapons.Count - 1].transform.localScale;
+        previewWeapon.SetNativeSize();
         yield return new WaitUntil(reload);
         attacking = false;
     }

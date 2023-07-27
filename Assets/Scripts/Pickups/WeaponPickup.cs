@@ -23,6 +23,7 @@ public class WeaponPickup : MonoBehaviour
         if (other.tag == "Player")
         {
             player.pickupWeapon(weapon);
+            soundManager.pickup();
             Destroy(gameObject);
         }
     }
